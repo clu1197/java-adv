@@ -1,5 +1,7 @@
 package Generic.Extra;
 
+import Generic.Extra.utils.QueryList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,22 @@ public class Main {
             lpaStudents.add(new LPAStudent());
         }
         printList(lpaStudents); //does NOT compile with public static void printList(List<Student> students)
+
+        var queryList = new QueryList<>(lpaStudents);
+        var matches = queryList.getMatches("Course", "Python");
+        printList(matches);
+
+        var matches1 = QueryList.getMatches(lpaStudents, "Course", "Java");
+        printList(matches1);
+
+        var matches2 = QueryList.<Student>getMatches(new ArrayList<>(), "Course", "Java");
+        printList(matches2);
+
+        // you cant do this, empty list, dont know the type
+//        var matches2 = QueryList.getMatches(new ArrayList<>(), "Course", "Java");
+//        printList(matches2);
+
+
     }
 
 //    public static void printList(List<Student> students) {
@@ -40,6 +58,7 @@ public class Main {
 //        }
 //        System.out.println();
 //    }
+
 
     // turn it into a generic method, with upper limit
     public static void printList(List<? extends Student> students) {
